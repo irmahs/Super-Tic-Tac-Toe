@@ -1,7 +1,7 @@
 {
   "name": "super-tic-tac-toe",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "electron": "^25.0.0",
     "electron-reload": "^2.0.0-alpha.1"
   }
 }
