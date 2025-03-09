@@ -11,188 +11,199 @@
 
 <body>
 
-  <label id="label">Player One Turn</label>
-  <button onclick="resetBoard()">Reset</button>
+  <div id="title">
+    <h1>
+      Super Tic Tac Toe
+    </h1>
+    <p>
+      by Irma HS on github
+    </p>
+    <h2 id="playerTurn">Player One Turn</h2>
+    <button id="resetButton" onclick="resetBoard()">Reset</button>
+  </div>
 
   <div class="button-container">
     <!-- Left section: 9 sets of 3x3 buttons -->
     <div class="left-buttons">
-      <div id="top-left" class="section">
+      <div id="top-left" class="section"> Mercury
         <!-- 1st row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game left venus">venus</button>
+          <button onclick="changeButton(this)" class="game left mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game left sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game left saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game left uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game left pluto">pluto</button>
         </div>
       </div>
 
-      <div id="middle-left" class="section">
+      <div id="middle-left" class="section"> Jupiter
         <!-- 2nd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game left venus">venus</button>
+          <button onclick="changeButton(this)" class="game left mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game left sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game left saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game left uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game left pluto">pluto</button>
         </div>
       </div>
 
-      <div id="bottom-left" class="section">
+      <div id="bottom-left" class="section"> Neptune
         <!-- 3rd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game left venus">venus</button>
+          <button onclick="changeButton(this)" class="game left mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game left sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game left saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
-          <button onclick="changeButton(this)" class="game left">X</button>
+          <button onclick="changeButton(this)" class="game left neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game left uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game left pluto">pluto</button>
         </div>
       </div>
+
     </div>
 
     <!-- Center section: 9 sets of 3x3 buttons -->
     <div class="center-buttons">
-      <div id="top-center" class="section">
+      <div id="top-center" class="section"> Venus
         <!-- 1st row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game center venus">venus</button>
+          <button onclick="changeButton(this)" class="game center mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game center sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game center saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game center uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game center pluto">pluto</button>
         </div>
       </div>
 
-      <div id="middle-center" class="section">
+      <div id="middle-center" class="section"> Sun & Moon
         <!-- 2nd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game center venus">venus</button>
+          <button onclick="changeButton(this)" class="game center mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game center sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game center saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game center uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game center pluto">pluto</button>
         </div>
       </div>
 
-      <div id="bottom-center" class="section">
+      <div id="bottom-center" class="section"> Uranus
         <!-- 3rd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game center venus">venus</button>
+          <button onclick="changeButton(this)" class="game center mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game center sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game center saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
-          <button onclick="changeButton(this)" class="game center">X</button>
+          <button onclick="changeButton(this)" class="game center neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game center uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game center pluto">pluto</button>
         </div>
       </div>
+
     </div>
 
-    <!-- Right section: 9 sets of 3x3 buttons -->
+    <!-- Right section: 9 sets of 3x3 buttons --> 
     <div class="right-buttons">
-      <div id="top-right" class="section">
+      <div id="top-right" class="section"> Mars
         <!-- 1st row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game right venus">venus</button>
+          <button onclick="changeButton(this)" class="game right mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game right sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game right saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game right uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game right pluto">pluto</button>
         </div>
       </div>
 
-      <div id="middle-right" class="section">
+      <div id="middle-right" class="section"> Saturn
         <!-- 2nd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game right venus">venus</button>
+          <button onclick="changeButton(this)" class="game right mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game right sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game right saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game right uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game right pluto">pluto</button>
         </div>
       </div>
 
-      <div id="bottom-right" class="section">
+      <div id="bottom-right" class="section"> Pluto
         <!-- 3rd row of 3 sets -->
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right mercury">mercury</button>
+          <button onclick="changeButton(this)" class="game right venus">venus</button>
+          <button onclick="changeButton(this)" class="game right mars">mars</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right jupiter">jupiter</button>
+          <button onclick="changeButton(this)" class="game right sun-moon">sun & moon</button>
+          <button onclick="changeButton(this)" class="game right saturn">saturn</button>
         </div>
         <div class="button-set">
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
-          <button onclick="changeButton(this)" class="game right">X</button>
+          <button onclick="changeButton(this)" class="game right neptune">neptune</button>
+          <button onclick="changeButton(this)" class="game right uranus">uranus</button>
+          <button onclick="changeButton(this)" class="game right pluto">pluto</button>
         </div>
       </div>
+
     </div>
   </div>
 
