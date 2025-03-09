@@ -1,10 +1,17 @@
+:root {
+  --dark: #0f1c2b;
+  --light: #6588c3;
+}
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background: #0f1c2b;
+  background: linear-gradient(180deg, var(--light), var(--dark));
   overflow: hidden;
   position: relative;
+  min-height: 100vh;
 }
+
 .stars {
   position: fixed;
   width: 100%;
@@ -36,7 +43,7 @@ body {
   color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px #0e0e0e33;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -55,9 +62,9 @@ body {
 }
 
 #resetButton {
-  background-color: white;
-  color: #525d69;
-  border: 2px solid #778ca4;
+  background-color: var(--dark);
+  color: white;
+  border: 2px solid white;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -65,10 +72,10 @@ body {
 }
 
 #resetButton:hover {
-  background-color: #4a90e2;
-  color: white;
+  background-color: white;
+  color: var(--dark);
+  border: 2px solid var(--dark);
 }
-
 
 .section {
   margin-bottom: 20px;

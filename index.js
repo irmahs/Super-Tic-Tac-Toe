@@ -29,18 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const starContainer = document.createElement("div");
     starContainer.classList.add("stars");
     document.body.appendChild(starContainer);
-  
-    const numStars = 100; // Adjust the number of stars
+
+    const numStars = 500; // Adjust the number of stars
     for (let i = 0; i < numStars; i++) {
-      const star = document.createElement("div");
-      star.classList.add("star");
+        const star = document.createElement("div");
+        star.classList.add("star");
       star.style.top = `${Math.random() * 100}vh`;
       star.style.left = `${Math.random() * 100}vw`;
       star.style.animationDelay = `${Math.random() * 3}s`;
-      starContainer.appendChild(star);
+        starContainer.appendChild(star);
     }
-  });
-  
+});
+
 
 function changeButton(button) {
     const buttonColor = getComputedStyle(button).backgroundColor;
@@ -53,14 +53,14 @@ function changeButton(button) {
             button.style.backgroundColor = pink;
             button.classList.add("played"); 
             button.classList.add("pink"); 
-            playerTurn.textContent = "Purple's Turn";
+            playerTurn.textContent = "Purple's 🔮 Turn";
             playerTurn.style.color = purple;
             isPlayerOne = !isPlayerOne;
         } else {
             button.style.backgroundColor = purple;
             button.classList.add("played");
             button.classList.add("purple"); 
-            playerTurn.textContent = "Pink's Turn";
+            playerTurn.textContent = "Pink's 🌸 Turn";
             playerTurn.style.color = pink;
             isPlayerOne = !isPlayerOne;
         }   
@@ -69,18 +69,16 @@ function changeButton(button) {
     const result = checkWinCondtion(button);
     if (result) {
         const position = getSectionId(button);
-        if (result == "pink") {
-            showToast("Pink wins " + planet);
-            document.getElementById(position).style.color = pink;
-            freePlayArea();
-        }
-        if (result == "purple") {
-            showToast("Purple wins " + planet);
-            document.getElementById(position).style.color = purple;
+        const winner = result === "pink" ? "Pink 🌸" : result === "purple" ? "Purple 🔮" : null;
+    
+        if (winner) {
+            showToast(`${winner} wins ${planet}`);
+            document.getElementById(position).style.color = result;
+            document.getElementById(position).classList.add(result);
             freePlayArea();
         }
     }
-
+    
     if (checkSectionWon(position)) {
         showToast(planet + " has been conquered! Visit another planet!");
         freePlayArea();
@@ -164,7 +162,7 @@ function checkWinCondtion(button) {
                 button.disabled = true;
                 button.classList.add("played");
             });
-            return color; // Return 'pink' or 'purple' indicating the winner
+            return color; // return 'pink' or 'purple' for winner
         }
     }
 
@@ -201,11 +199,11 @@ function resetBoard() {
     buttons.forEach(button => {
         button.style.backgroundColor = "white";
         button.disabled = false;
-        button.classList.remove("played");// Removes a class
+        button.classList.remove("played");
         button.classList.remove("purple");
         button.classList.remove("pink"); 
     });
-    playerTurn.textContent = "Pink's Turn";
+    playerTurn.textContent = "Pink's 🌸 Turn";
     playerTurn.style.color = pink;
 }
 
