@@ -1,8 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background: linear-gradient(180deg, #0f1c2b, #6588c3);
-  
+  background: linear-gradient(180deg, #6588c3, #0f1c2b);
 }
 
 #title {

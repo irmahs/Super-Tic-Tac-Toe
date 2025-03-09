@@ -17,12 +17,6 @@ function changeButton(button) {
     const planet = button.classList[2];
     const position = positionMap.get(planet);
 
-    if (position) {
-        showToast(`You clicked ${planet}, position: ${position}`);
-    } else {
-        showToast("Unknown button clicked");
-    }
-
     if (!button.classList.contains("played")) {
         if (isPlayerOne) {
             button.style.backgroundColor = "#ffb8ee";
@@ -37,14 +31,26 @@ function changeButton(button) {
         }
     }
 
-    playArea(button);
+
+    if (checkSectionFilled(position)) {
+        showToast(planet + " is filled! Visit another planet!");
+        freePlayArea();
+    } else {
+        fixedPlayArea(button);
+    }
+}
+function freePlayArea() {
+    const playableButtons = document.querySelectorAll(`button:not(.played)`);
+    playableButtons.forEach(button => {
+        button.disabled = false;
+    });
 }
 
-function playArea(button) {
-
+function fixedPlayArea(button) {
     const planet = button.classList[2];
     const position = positionMap.get(planet);
 
+    //get all buttons
     const totalButtons = document.querySelectorAll("button.game");
     totalButtons.forEach(button => {
         button.disabled = true;
@@ -56,19 +62,23 @@ function playArea(button) {
     });
 }
 
-function checkSectionFilled(sectionId) {
-    const section = document.getElementById(sectionId);
-    const children = section.querySelectorAll("button");
+function checkSectionFilled(position) {
+    // get all buttons that haven't been played under position
+    const playableButtons = document.querySelectorAll(`#${position} button:not(.played)`);
 
-    // Check if all children have the 'played' class
-    const allPlayed = Array.from(children).every(button => button.classList.contains('played'));
+    // get all buttons under position
+    const allButtons = document.querySelectorAll(`#${position} .button-set button`);
 
-    // If all children have the 'played' class, add 'filled' to the parent
-    if (allPlayed) {
-        section.classList.add('filled');
-    } else {
-        section.classList.remove('filled');
-    }
+    // get all buttons that are played undeer position
+    const playedButtons = allButtons.length - playableButtons.length;
+    
+    showToast("position " + position + " playable " + playableButtons.length + " played " + playedButtons);
+
+    // check if played is equal to all buttons
+    return playedButtons == allButtons.length;
+}
+
+function checkSectionWon(position) {
 
 }
 
@@ -100,5 +110,5 @@ function resetBoard() {
         button.disabled = false;
         button.classList.remove("played"); // Removes a class
     });
-    document.getElementById("label").textContent = "Player One Turn";
+    document.getElementById("playerTurn").textContent = "Player One Turn";
 }
