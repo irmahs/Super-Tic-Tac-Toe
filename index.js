@@ -1,4 +1,6 @@
 let isPlayerOne = true;
+let pink = "#ffb8ee";
+let purple = "#d4b8ff";
 
 const positionMap = new Map([
     ["mercury", "top-left"],
@@ -12,33 +14,64 @@ const positionMap = new Map([
     ["pluto", "bottom-right"]
 ]);
 
+const winPatterns = [
+    [0, 1, 2],  // Row 1
+    [3, 4, 5],  // Row 2
+    [6, 7, 8],  // Row 3
+    [0, 3, 6],  // Column 1
+    [1, 4, 7],  // Column 2
+    [2, 5, 8],  // Column 3
+    [0, 4, 8],  // Diagonal 1
+    [2, 4, 6]   // Diagonal 2
+];
+
 function changeButton(button) {
     const buttonColor = getComputedStyle(button).backgroundColor;
     const planet = button.classList[2];
     const position = positionMap.get(planet);
+    const playerTurn = document.getElementById("playerTurn");
 
     if (!button.classList.contains("played")) {
         if (isPlayerOne) {
-            button.style.backgroundColor = "#ffb8ee";
+            button.style.backgroundColor = pink;
             button.classList.add("played"); // Adds a class
-            document.getElementById("playerTurn").textContent = "Player Two Turn";
+            button.classList.add("pink"); // Adds a class
+            playerTurn.textContent = "Purple's Turn";
+            playerTurn.style.color = purple;
             isPlayerOne = !isPlayerOne;
         } else {
-            button.style.backgroundColor = "#d4b8ff";
+            button.style.backgroundColor = purple;
             button.classList.add("played"); // Adds a class
-            document.getElementById("playerTurn").textContent = "Player One Turn";
+            button.classList.add("purple"); // Adds a class
+            playerTurn.textContent = "Pink's Turn";
+            playerTurn.style.color = pink;
             isPlayerOne = !isPlayerOne;
-        }
+        }   
     }
 
+    const result = checkSectionWon(button);
+    if (result) {
+        if (result == "pink") {
+            showToast("Pink wins");
+        }
+        if (result == "purple") {
+            showToast("Purple wins");
+        }
+    }
 
     if (checkSectionFilled(position)) {
         showToast(planet + " is filled! Visit another planet!");
         freePlayArea();
-    } else {
+      } else {
         fixedPlayArea(button);
-    }
+      }
 }
+
+function getSectionId(button) {
+    const section = button.closest(".section"); // Find closest parent with class 'section'
+    return section ? section.id : null; // Return the ID or null if not found
+}
+
 function freePlayArea() {
     const playableButtons = document.querySelectorAll(`button:not(.played)`);
     playableButtons.forEach(button => {
@@ -78,8 +111,32 @@ function checkSectionFilled(position) {
     return playedButtons == allButtons.length;
 }
 
-function checkSectionWon(position) {
+function checkSectionWon(button) {
+    // get current position
+    const position = getSectionId(button);
+    // get all buttons under position
+    const allButtons = document.querySelectorAll(`#${position} .button-set button`);
+    // Check each win pattern
+    for (let pattern of winPatterns) {
+        const [a, b, c] = pattern;
 
+        // Get the class of the first button in the pattern
+        let color = null;
+        if (allButtons[a].classList.contains('pink')) {
+            color = 'pink';
+        } else if (allButtons[a].classList.contains('purple')) {
+            color = 'purple';
+        }
+
+        // If the first button has a color and all three buttons have the same color
+        if (color &&
+            allButtons[b].classList.contains(color) &&
+            allButtons[c].classList.contains(color)) {
+            return color; // Return 'pink' or 'purple' indicating the winner
+        }
+    }
+
+    return false;
 }
 
 function showToast(message) {
@@ -103,12 +160,16 @@ function showToast(message) {
 }
 
 function resetBoard() {
+    const playerTurn = document.getElementById("playerTurn");
     isPlayerOne = true;
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => {
         button.style.backgroundColor = "white";
         button.disabled = false;
-        button.classList.remove("played"); // Removes a class
+        button.classList.remove("played");// Removes a class
+        button.classList.remove("purple");
+        button.classList.remove("pink"); 
     });
-    document.getElementById("playerTurn").textContent = "Player One Turn";
+    playerTurn.textContent = "Pink's Turn";
+    playerTurn.style.color = pink;
 }
