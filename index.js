@@ -25,6 +25,23 @@ const winPatterns = [
     [2, 4, 6]   // Diagonal 2
 ];
 
+document.addEventListener("DOMContentLoaded", () => {
+    const starContainer = document.createElement("div");
+    starContainer.classList.add("stars");
+    document.body.appendChild(starContainer);
+  
+    const numStars = 100; // Adjust the number of stars
+    for (let i = 0; i < numStars; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDelay = `${Math.random() * 3}s`;
+      starContainer.appendChild(star);
+    }
+  });
+  
+
 function changeButton(button) {
     const buttonColor = getComputedStyle(button).backgroundColor;
     const planet = button.classList[2];
@@ -34,37 +51,45 @@ function changeButton(button) {
     if (!button.classList.contains("played")) {
         if (isPlayerOne) {
             button.style.backgroundColor = pink;
-            button.classList.add("played"); // Adds a class
-            button.classList.add("pink"); // Adds a class
+            button.classList.add("played"); 
+            button.classList.add("pink"); 
             playerTurn.textContent = "Purple's Turn";
             playerTurn.style.color = purple;
             isPlayerOne = !isPlayerOne;
         } else {
             button.style.backgroundColor = purple;
-            button.classList.add("played"); // Adds a class
-            button.classList.add("purple"); // Adds a class
+            button.classList.add("played");
+            button.classList.add("purple"); 
             playerTurn.textContent = "Pink's Turn";
             playerTurn.style.color = pink;
             isPlayerOne = !isPlayerOne;
         }   
     }
 
-    const result = checkSectionWon(button);
+    const result = checkWinCondtion(button);
     if (result) {
+        const position = getSectionId(button);
         if (result == "pink") {
-            showToast("Pink wins");
+            showToast("Pink wins " + planet);
+            document.getElementById(position).style.color = pink;
+            freePlayArea();
         }
         if (result == "purple") {
-            showToast("Purple wins");
+            showToast("Purple wins " + planet);
+            document.getElementById(position).style.color = purple;
+            freePlayArea();
         }
     }
 
-    if (checkSectionFilled(position)) {
-        showToast(planet + " is filled! Visit another planet!");
+    if (checkSectionWon(position)) {
+        showToast(planet + " has been conquered! Visit another planet!");
         freePlayArea();
-      } else {
+    } else if (checkSectionFilled(position)) {
+        showToast(planet + " is full! Visit another planet!");
+        freePlayArea();
+    } else {
         fixedPlayArea(button);
-      }
+    }
 }
 
 function getSectionId(button) {
@@ -104,23 +129,25 @@ function checkSectionFilled(position) {
 
     // get all buttons that are played undeer position
     const playedButtons = allButtons.length - playableButtons.length;
-    
-    showToast("position " + position + " playable " + playableButtons.length + " played " + playedButtons);
 
     // check if played is equal to all buttons
     return playedButtons == allButtons.length;
 }
 
-function checkSectionWon(button) {
+function checkSectionWon(position) {
+    return document.getElementById(position).classList.contains("won");
+}
+
+function checkWinCondtion(button) {
     // get current position
     const position = getSectionId(button);
     // get all buttons under position
     const allButtons = document.querySelectorAll(`#${position} .button-set button`);
-    // Check each win pattern
+    // check each win pattern
     for (let pattern of winPatterns) {
         const [a, b, c] = pattern;
 
-        // Get the class of the first button in the pattern
+        // get the class of the first button in the pattern
         let color = null;
         if (allButtons[a].classList.contains('pink')) {
             color = 'pink';
@@ -128,10 +155,15 @@ function checkSectionWon(button) {
             color = 'purple';
         }
 
-        // If the first button has a color and all three buttons have the same color
-        if (color &&
-            allButtons[b].classList.contains(color) &&
-            allButtons[c].classList.contains(color)) {
+        // if the first button has a color and all three buttons have the same color
+        if (color && allButtons[b].classList.contains(color) && allButtons[c].classList.contains(color)) {
+            const wonSection = document.getElementById(position);
+            wonSection.classList.add("won");
+            const wonButtons = document.querySelectorAll(`#${position} button:not(.played)`);
+            wonButtons.forEach(button => {
+                button.disabled = true;
+                button.classList.add("played");
+            });
             return color; // Return 'pink' or 'purple' indicating the winner
         }
     }
@@ -162,6 +194,9 @@ function showToast(message) {
 function resetBoard() {
     const playerTurn = document.getElementById("playerTurn");
     isPlayerOne = true;
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("won");
+    });
     const buttons = document.querySelectorAll("button");
     buttons.forEach(button => {
         button.style.backgroundColor = "white";
@@ -173,3 +208,4 @@ function resetBoard() {
     playerTurn.textContent = "Pink's Turn";
     playerTurn.style.color = pink;
 }
+
