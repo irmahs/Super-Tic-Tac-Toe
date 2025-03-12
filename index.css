@@ -1,5 +1,5 @@
 :root {
-  --dark: #0f1c2b;
+  --dark: #071d37;
   --light: #6588c3;
 }
 
@@ -62,7 +62,7 @@ body {
 }
 
 #resetButton {
-  background-color: var(--dark);
+  background-color: var(--light);
   color: white;
   border: 2px solid white;
   padding: 10px 20px;
@@ -108,5 +108,4 @@ body {
   height: 50px;
   width: 100px;
   margin: 2px;
-  background-color: white;
 }

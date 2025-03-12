@@ -34,13 +34,24 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < numStars; i++) {
         const star = document.createElement("div");
         star.classList.add("star");
-      star.style.top = `${Math.random() * 100}vh`;
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.animationDelay = `${Math.random() * 3}s`;
+        star.style.top = `${Math.random() * 100}vh`;
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.animationDelay = `${Math.random() * 3}s`;
         starContainer.appendChild(star);
     }
 });
 
+// call initializeWinCheck to set up the observer when the DOM is loaded
+document.addEventListener("DOMContentLoaded", initializeWinCheck);
+
+function getPlanetByPosition(position) {
+    for (let [planet, val] of positionMap.entries()) {
+        if (val === position) {
+            return planet;
+        }
+    }
+    return null;
+}
 
 function changeButton(button) {
     const buttonColor = getComputedStyle(button).backgroundColor;
@@ -70,13 +81,14 @@ function changeButton(button) {
     if (result) {
         const position = getSectionId(button);
         const winner = result === "pink" ? "Pink 🌸" : result === "purple" ? "Purple 🔮" : null;
-    
+        const winnerColor = result === "pink" ? "#ffb8ee" : result === "purple" ? "#d4b8ff" : null;
         if (winner) {
-            showToast(`${winner} wins ${planet}`);
-            document.getElementById(position).style.color = result;
+            showToast(`${winner} wins ${getPlanetByPosition(position)}`);
+            document.getElementById(position).style.color = winnerColor;
             document.getElementById(position).classList.add(result);
+        } else {
             freePlayArea();
-        }
+            }
     }
     
     if (checkSectionWon(position)) {
@@ -91,8 +103,8 @@ function changeButton(button) {
 }
 
 function getSectionId(button) {
-    const section = button.closest(".section"); // Find closest parent with class 'section'
-    return section ? section.id : null; // Return the ID or null if not found
+    const section = button.closest(".section"); 
+    return section ? section.id : null; 
 }
 
 function freePlayArea() {
@@ -129,7 +141,7 @@ function checkSectionFilled(position) {
     const playedButtons = allButtons.length - playableButtons.length;
 
     // check if played is equal to all buttons
-    return playedButtons == allButtons.length;
+    return playedButtons == allButtons.length ? document.getElementById(position).classList.add("filled") || true : false;
 }
 
 function checkSectionWon(position) {
@@ -169,6 +181,57 @@ function checkWinCondtion(button) {
     return false;
 }
 
+function initializeWinCheck() {
+    // add MutationObserver to detect changes in class of sections
+    const observer = new MutationObserver(() => {
+        // call the checkWinCondtionBig function when any class change is detected
+        const result = checkWinCondtionBig();
+        const winner = result === "pink" ? "Pink 🌸" : result === "purple" ? "Purple 🔮" : null;
+        const winnerColor = result === "pink" ? "#ffb8ee" : result === "purple" ? "#d4b8ff" : null;
+        if (checkWinCondtionBig()) {
+            showCelebrationToast(winner, winnerColor);
+            document.querySelectorAll(".star").forEach(star => {
+                star.style.backgroundColor = winnerColor;
+            });
+            document.querySelectorAll("button:not(#resetButton)").forEach(button => {
+                button.disabled = true;
+            });
+        }
+    });
+
+    // observe all sections for class attribute changes
+    document.querySelectorAll(".section").forEach(section => {
+        observer.observe(section, { attributes: true, attributeFilter: ["class"] });
+    });
+}
+
+// check winner for big game
+function checkWinCondtionBig() {
+    const allSections = document.querySelectorAll(".section");
+    
+    // check each win pattern
+    for (let pattern of winPatterns) {
+        const [a, b, c] = pattern;
+
+        // get the class of the first section in the pattern
+        let color = null;
+        if (allSections[a].classList.contains('pink')) {
+            color = 'pink';
+        } else if (allSections[a].classList.contains('purple')) {
+            color = 'purple';
+        }
+
+        // if the first section has a color and all three sections have the same color
+        if (color && allSections[b].classList.contains(color) && allSections[c].classList.contains(color)) {
+            return color;
+        }
+    }
+
+    return false;
+}
+
+
+
 function showToast(message) {
     const toast = document.createElement("div");
     toast.textContent = message;
@@ -194,8 +257,12 @@ function resetBoard() {
     isPlayerOne = true;
     document.querySelectorAll(".section").forEach(section => {
         section.classList.remove("won");
+        section.classList.remove("filled");
+        section.classList.remove("purple");
+        section.classList.remove("pink");
+        section.style.color = "white";
     });
-    const buttons = document.querySelectorAll("button");
+    const buttons = document.querySelectorAll("button:not(#resetButton)");
     buttons.forEach(button => {
         button.style.backgroundColor = "white";
         button.disabled = false;
@@ -204,6 +271,35 @@ function resetBoard() {
         button.classList.remove("pink"); 
     });
     playerTurn.textContent = "Pink's 🌸 Turn";
-    playerTurn.style.color = pink;
+    playerTurn.style.color = "pink";
 }
+
+function showCelebrationToast(winner, winnerColor) {
+    // create the celebration toast container
+    const toast = document.createElement("div");
+    toast.textContent = `${winner} Wins! 🎉🎉`;
+    toast.classList.add("celebration-toast");
+
+    // apply inline styles directly to the toast
+    toast.style.position = "fixed";
+    toast.style.top = "50%";
+    toast.style.left = "50%";
+    toast.style.transform = "translate(-50%, -50%)";
+    toast.style.backgroundColor = winnerColor;
+    toast.style.padding = "20px";
+    toast.style.fontSize = "2rem";
+    toast.style.fontWeight = "bold";
+    toast.style.borderRadius = "10px";
+    toast.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.1)";
+    toast.style.zIndex = "1000";
+
+    // add the toast to the body
+    document.body.appendChild(toast);
+
+     // remove the toast after 5 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
+}
+
 
