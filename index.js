@@ -42,7 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // call initializeWinCheck to set up the observer when the DOM is loaded
-document.addEventListener("DOMContentLoaded", initializeWinCheck);
+document.addEventListener("DOMContentLoaded", () => {
+    initializeWinCheck();
+    initializeSectionObservers();
+});
 
 function getPlanetByPosition(position) {
     for (let [planet, val] of positionMap.entries()) {
@@ -94,7 +97,7 @@ function changeButton(button) {
     if (checkSectionWon(position)) {
         showToast(planet + " has been conquered! Visit another planet!");
         freePlayArea();
-    } else if (checkSectionFilled(position)) {
+    } else if (checkNextSectionFilled(position)) {
         showToast(planet + " is full! Visit another planet!");
         freePlayArea();
     } else {
@@ -130,18 +133,16 @@ function fixedPlayArea(button) {
     });
 }
 
-function checkSectionFilled(position) {
+function checkNextSectionFilled(nextPosition) {
     // get all buttons that haven't been played under position
-    const playableButtons = document.querySelectorAll(`#${position} button:not(.played)`);
-
+    const playableButtons = document.querySelectorAll(`#${nextPosition} button:not(.played)`);
     // get all buttons under position
-    const allButtons = document.querySelectorAll(`#${position} .button-set button`);
-
-    // get all buttons that are played undeer position
+    const allButtons = document.querySelectorAll(`#${nextPosition} .button-set button`);
+    // get all buttons that are played under position
     const playedButtons = allButtons.length - playableButtons.length;
 
     // check if played is equal to all buttons
-    return playedButtons == allButtons.length ? document.getElementById(position).classList.add("filled") || true : false;
+    return playedButtons == allButtons.length ? document.getElementById(nextPosition).classList.add("filled") || true : false;
 }
 
 function checkSectionWon(position) {
@@ -196,6 +197,8 @@ function initializeWinCheck() {
             document.querySelectorAll("button:not(#resetButton)").forEach(button => {
                 button.disabled = true;
             });
+        } else if (checkAllSectionsCompleted()) {
+            showCelebrationToast("Nobody ")
         }
     });
 
@@ -203,6 +206,20 @@ function initializeWinCheck() {
     document.querySelectorAll(".section").forEach(section => {
         observer.observe(section, { attributes: true, attributeFilter: ["class"] });
     });
+}
+
+function checkAllSectionsCompleted() {
+    const sections = document.querySelectorAll(".section");
+
+    // vheck if all sections are either "won" or "filled"
+    for (let section of sections) {
+        if (!section.classList.contains("won") && !section.classList.contains("filled")) {
+            // if any section is neither won nor filled, return false
+            return false;  
+        }
+    }
+// if all sections are won or filled, return true
+    return true;  
 }
 
 // check winner for big game
@@ -230,6 +247,26 @@ function checkWinCondtionBig() {
     return false;
 }
 
+function initializeSectionObservers() {
+    document.querySelectorAll(".section").forEach(section => {
+        const observer = new MutationObserver(() => {
+            checkAndMarkSectionFilled(section);
+        });
+    
+        // Observe class changes on all buttons inside the section
+        section.querySelectorAll("button").forEach(button => {
+            observer.observe(button, { attributes: true, attributeFilter: ["class"] });
+        });
+    });
+    
+}
+
+function checkAndMarkSectionFilled(section) {
+    const currentPlayableButtons = section.querySelectorAll(`button:not(.played)`);
+    if (currentPlayableButtons.length === 0) {
+        section.classList.add("filled");
+    };
+}
 
 
 function showToast(message) {
@@ -269,6 +306,9 @@ function resetBoard() {
         button.classList.remove("played");
         button.classList.remove("purple");
         button.classList.remove("pink"); 
+    });
+    document.querySelectorAll(".star").forEach(star => {
+        star.style.backgroundColor = "white";
     });
     playerTurn.textContent = "Pink's 🌸 Turn";
     playerTurn.style.color = "pink";

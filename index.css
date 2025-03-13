@@ -11,6 +11,14 @@ body {
   position: relative;
   min-height: 100vh;
 }
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover {
+  font-weight: bold;
+}
 
 .stars {
   position: fixed;
